@@ -5,7 +5,7 @@ PROJECT="turnkey-cooler-231216"
 NAME="istiofun"
 NODE_COUNT=3
 LOCATION="europe-west1-d"
-ISTIO_VERSION="1.4"
+ISTIO_VERSION="1.4.0"
 
 
 # You can also check this site to see alternatives on setting up azure AKS
