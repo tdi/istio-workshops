@@ -15,11 +15,11 @@ You can also set up the cluster with istio with `./gke-provision.sh` script and 
 Set the variables and ISTIO version to download, you need to put your project name in PROJECT variable.
 
 ```
-PROJECT="turnkey-cooler-324343"
-NAME="istiofun"
-NODE_COUNT=3
-LOCATION="europe-west1-d"
-ISTIO_VERSION="1.4"
+export PROJECT="turnkey-cooler-324343"
+export NAME="istiofun"
+export NODE_COUNT=3
+export LOCATION="europe-west1-d"
+export ISTIO_VERSION="1.4"
 ```
 
 Provision a cluster:
