@@ -19,7 +19,7 @@ export PROJECT="turnkey-cooler-324343"
 export NAME="istiofun"
 export NODE_COUNT=3
 export LOCATION="europe-west1-d"
-export ISTIO_VERSION="1.4"
+export ISTIO_VERSION="1.4.0"
 ```
 
 Provision a cluster:
