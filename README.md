@@ -134,8 +134,8 @@ Now we need to check what is the application entry. Export these variables.
 ```
 export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
-export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')"
-export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT"
+export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 ```
 
 If you do `curl -s http://${GATEWAY_URL}/productpage | grep -o "<title>.*</title>" ` you should see the page title. You can also go to the `${GATEWAY_URL}` in your browser. `echo ${GATEWAY_URL}` will give the adress to copy / paste.
@@ -189,7 +189,7 @@ Here we will do gradual traffic shifting based on %. Let's reset to the v1 versi
 
 Let's simulate canary deployment. Let's transfer 50% traffic from `reviews:v1` to `reviews:v3` 
 
-``kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml`
+`kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml`
 
 
 You can check of the rule is applied:
