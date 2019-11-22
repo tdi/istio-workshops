@@ -150,7 +150,7 @@ Kiali is the mesh visualization. To run in on `localhost:20001` do the command (
 
 All commands for this execrize will be assumed you are in the `istio-${ISTIO_VERSION}` directory. In order to generate constant traffic to the page (so that stats are shown in Kiali), you can use this command, which will do a `GET` operation every 1s.
 
-`watch -n 1 curl -s http://$\{GATEWAY_URL\}/productpage | grep -o "<title>.*</title>"` 
+`watch -n 1 curl -s http://${GATEWAY_URL}/productpage | grep -o "<title>.*</title>"` 
 
 ### Traffic Management 
 
