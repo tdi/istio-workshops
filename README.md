@@ -1,11 +1,12 @@
-#
 # Istio workshops
 
 Commands gathered in a one place to faster go through istio use cases. All the commands are from the istio page, I just scripted them into one place. 
 
 To proceed with workshops, first provision a cluster on Azure or GCP with Istio installed. You can use provision scripts for that. Later go to workshop steps and proceed with them.
 
-## Provision GKE
+## Prepare clusters 
+
+### Provision GKE
 
 All the commands should be copied and pasted into terminal.
 What is needed is `gcloud` cli,  `kubectl` and `git` installed. 
@@ -43,7 +44,7 @@ kubectl cluster-info
 kubectl get nodes
 ```
 
-## Provision AKS
+### Provision AKS
 
 All the commands should be copied and pasted into terminal. 
 What is needed is `az cli`,  `kubectl` and `git` installed. 
@@ -84,7 +85,8 @@ Check if the clyster is fine:
 kubectl get nodes
 kubectl cluster-info
 ```
-# Set up istio
+
+## Set up istio
 
 Istio can be set up with helm or manually, we will do it manually - it is easier.
 
@@ -109,7 +111,7 @@ kubectl get pods -n istio-system
 kubectl get svc -n istio-system
 ```
 
-# Deploy the demo app 
+## Deploy the demo app 
 
 
 We say that namespace `default` will be automatically injected with sidecars:
@@ -138,22 +140,21 @@ export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT"
 
 If you do `curl -s http://${GATEWAY_URL}/productpage | grep -o "<title>.*</title>" ` you should see the page title. You can also go to the `${GATEWAY_URL}` in your browser. `echo ${GATEWAY_URL}` will give the adress to copy / paste.
 
-## Run kiali
+### Run kiali
 
 Kiali is the mesh visualization. To run in on `localhost:20001` do the command (user and password are admin/admin):
 
-`kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 &` 
+`kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 &`
 
-
-# Excercises
+## Excercises
 
 All commands for this execrize will be assumed you are in the `istio-${ISTIO_VERSION}` directory. In order to generate constant traffic to the page (so that stats are shown in Kiali), you can use this command, which will do a `GET` operation every 1s.
 
 `watch -n 1 curl -s http://$\{GATEWAY_URL\}/productpage | grep -o "<title>.*</title>"` 
 
-## Traffic Management 
+### Traffic Management 
 
-## Request routing
+#### Request routing
 
 First apply default destination rules. 
 
@@ -167,7 +168,7 @@ Apply default virtual service - it will create ISTIO services for the microservi
 
 In Kiali you should see how traffic goes to the v1. 
 
-### Routing based on HTTP header
+#### Routing based on HTTP header
 
 When you log in as user `jason` the product page will add an `end-user` header with the value `jason`. 
 
@@ -179,7 +180,7 @@ All other traffic will still go to version 1. You can open one browser window an
 
 > to go back to version 1 traffic flow do `kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml`
 
-### Traffic shifting
+#### Traffic shifting
 
 Here we will do gradual traffic shifting based on %. Let's reset to the v1 version, before we start.
 
@@ -221,8 +222,3 @@ Now generate more traffic and check Kiali what happens. If traffic distribution 
 `kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml`
 
  Now you can open `samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml` and do some changes to percentages youserself. Remember to `kubectl apply`. 
-
- 
-
-
-
