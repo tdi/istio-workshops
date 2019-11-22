@@ -1,12 +1,55 @@
-# Run GKE + ISTIO
+#
+# Istio workshops
+
+Commands gathered in a one place to faster go through istio use cases. All the commands are from the istio page, I just scripted them into one place. 
+
+To proceed with workshops, first provision a cluster on Azure or GCP with Istio installed. You can use provision scripts for that. Later go to workshop steps and proceed with them.
+
+## Provision GKE
 
 All the commands should be copied and pasted into terminal.
 What is needed is `gcloud` cli,  `kubectl` and `git` installed. 
-You can also set up the cluster with istio and demo app with `./gke-provision.sh` script and go straigh to the `Excercises`.
+You can also set up the cluster with istio with `./gke-provision.sh` script and go straight to the `Excercises`.
 
-# Run GKE
+Set the variables and ISTIO version to download, you need to put your project name in PROJECT variable.
 
-Set the version.
+```
+PROJECT="turnkey-cooler-324343"
+NAME="istiofun"
+NODE_COUNT=3
+LOCATION="europe-west1-d"
+ISTIO_VERSION="1.4"
+```
+
+Provision a cluster:
+
+```
+gcloud beta container --project ${PROJECT} clusters create ${NAME} --zone ${LOCATION} --machine-type "n1-standard-1" --num-nodes 3 --cluster-version latest
+
+
+```
+
+And get credentials:
+
+```
+gcloud container clusters get-credentials ${NAME} --zone ${LOCATION} --project ${PROJECT}
+kubectl config set-context ${NAME}
+```
+
+Wait until cluster is ready:
+
+```
+kubectl cluster-info
+kubectl get nodes
+```
+
+## Provision AKS
+
+All the commands should be copied and pasted into terminal. 
+What is needed is `az cli`,  `kubectl` and `git` installed. 
+YOu can also set up the cluster with isiot and demo app with `./provision.sh` script and go straight to the `Excercises`.
+
+Set the version. 
 
 `export KUBE_VER=$(az aks get-versions -l ${LOCATION} --query 'orchestrators[-1].orchestratorVersion' -o tsv)`
 

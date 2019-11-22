@@ -5,8 +5,7 @@ PROJECT="turnkey-cooler-231216"
 NAME="istiofun"
 NODE_COUNT=3
 LOCATION="europe-west1-d"
-ISTIO_VERSION="1.3.2"
-KUBE_VER=$(az aks get-versions -l ${LOCATION} --query 'orchestrators[-1].orchestratorVersion' -o tsv)
+ISTIO_VERSION="1.4"
 
 
 # You can also check this site to see alternatives on setting up azure AKS
@@ -20,7 +19,7 @@ gcloud beta container --project ${PROJECT} clusters create ${NAME} --zone ${LOCA
 
 echo "Cluster ${NAME} is fine, setting kubectl"
 gcloud container clusters get-credentials ${NAME} --zone ${LOCATION} --project ${PROJECT}
-exit 
+
 kubectl config set-context ${NAME}
 
 echo "The cluster is ready"
